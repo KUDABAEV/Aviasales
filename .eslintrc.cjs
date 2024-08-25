@@ -28,5 +28,6 @@ module.exports = {
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'import/prefer-default-export': 0,
     'react/react-in-jsx-scope': 0,
+    'react/prop-types': 0,
   },
 };
