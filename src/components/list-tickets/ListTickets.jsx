@@ -1,13 +1,14 @@
 import { Ticket } from '../ticket/Ticket';
+import styles from './ListTickets.module.scss';
 
 export function ListTickets() {
   return (
-    <>
-      Список билетов
+    <div className={styles.listTickets}>
       <Ticket />
       <Ticket />
       <Ticket />
       <Ticket />
-    </>
+      <Ticket />
+    </div>
   );
 }

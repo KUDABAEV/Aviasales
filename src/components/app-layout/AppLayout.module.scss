@@ -1,0 +1,56 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: 'wdth' 100;
+  background-color: #f3f7fa;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+button {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+fieldset {
+  margin: 0;
+}
+.logo {
+  padding: 50px 0;
+}
+
+.appLayout {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+  padding: 0 103px;
+}
+
+.tabs {
+  flex: 1 1 auto;
+}

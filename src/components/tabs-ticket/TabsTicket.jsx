@@ -1,13 +1,12 @@
-function Tab({ name, onClick }) {
-  return <button onClick={onClick}>{name}</button>;
-}
+import { Tab } from '../tab/Tab';
+import styles from './TabsTicket.module.scss';
 
 export function TabsTicket() {
   return (
-    <div>
-      <Tab name={'Tab 1'} />
-      <Tab name={'Tab 2'} />
-      <Tab name={'Tab 3'} />
+    <div className={styles.tabsTicket}>
+      <Tab name={'Самый дешевый'} />
+      <Tab name={'Самый быстрый'} />
+      <Tab name={'Оптимальный'} />
     </div>
   );
 }
