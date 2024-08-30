@@ -27,3 +27,11 @@
 .tab:last-child {
   border-radius: 0 6px 6px 0;
 }
+
+@media (max-width: 675px) {
+  .tab {
+    padding: 10px;
+    font-size: 10px;
+    line-height: 14px;
+  }
+}

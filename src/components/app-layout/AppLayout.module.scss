@@ -38,6 +38,7 @@ fieldset {
 }
 .logo {
   padding: 50px 0;
+  text-align: center;
 }
 
 .appLayout {
@@ -53,4 +54,32 @@ fieldset {
 
 .tabs {
   flex: 1 1 auto;
+}
+
+@media (max-width: 968px) {
+  .content {
+    flex-direction: column;
+    
+  }
+  .logo {
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 968px) {
+  .content {
+    padding: 0 50px;
+  }
+}
+
+@media (max-width: 568px) {
+  .content {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .content {
+    padding: 0 10px;
+  }
 }

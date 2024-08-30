@@ -5,7 +5,7 @@ export function Ticket() {
   return (
     <div className={styles.ticket}>
       <div className={styles.ticketHeader}>
-        <p className={styles.ticketPrice}>{13400}р</p>
+        <p className={styles.ticketPrice}>{13400} р</p>
         <img className={styles.ticketImage} src="/src/assets/S7.svg" alt="S7" />
       </div>
       <div className={styles.ticketItems}>

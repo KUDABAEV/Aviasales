@@ -23,3 +23,9 @@
   grid-template: repeat(2, auto) / repeat(3, 1fr);
   gap: 10px 20px;
 }
+
+@media (max-width: 400px) {
+  .ticket {
+    padding: 10px;
+  }
+}
