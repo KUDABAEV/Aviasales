@@ -1,3 +1,8 @@
 export function PageTest() {
-  return <div>PageTest</div>;
+  return (
+    <div>
+      <div>PageTest</div>
+      <button>Добавить todo</button>
+    </div>
+  );
 }

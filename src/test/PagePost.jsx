@@ -22,7 +22,7 @@ function Post({ id, title, body, user }) {
   );
 }
 
-export function PageTest() {
+export function PagePost() {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +41,7 @@ export function PageTest() {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
     getPostWithUser({ page: nextPage })
-      .then((nextData) => setPosts([...posts, ...nextData]))
+      .then((nextPosts) => setPosts((prevPosts) => [...prevPosts, ...nextPosts]))
       .catch((error) => setIsError(error))
       .finally(() => setIsLoading(false));
   };
