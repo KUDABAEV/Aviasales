@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import { PageTest } from './test/PageTest';
+import { PagePost } from './test/PagePost';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <PageTest />
+    <PagePost />
   </StrictMode>
 );

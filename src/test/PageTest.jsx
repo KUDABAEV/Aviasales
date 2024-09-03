@@ -27,7 +27,7 @@ export function PageTest() {
 
   const handleAddTodo = () => {
     addTodo().then((todo) => {
-      console.log(todo);
+      return todo;
     });
   };
 
