@@ -1,12 +1,12 @@
 import { FlightInfo } from '../flight-info/FlightInfo';
 import styles from './Ticket.module.scss';
 
-export function Ticket() {
+export function Ticket({ carrier, price }) {
   return (
     <div className={styles.ticket}>
       <div className={styles.ticketHeader}>
-        <p className={styles.ticketPrice}>{13400} р</p>
-        <img className={styles.ticketImage} src="/src/assets/S7.svg" alt="S7" />
+        <p className={styles.ticketPrice}>{price.toLocaleString('ru-RU')} р</p>
+        <img className={styles.ticketImage} src={`//pics.avs.io/99/36/${carrier}.png`} alt="S7" />
       </div>
       <div className={styles.ticketItems}>
         <FlightInfo road="MOW – HKT" time="10:45 – 08:00" />
