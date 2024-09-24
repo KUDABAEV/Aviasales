@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { client } from '../api/client';
+import { transformTicket } from '../utils/aviasales-utils';
 
 const initialState = {
   tickets: [],
@@ -13,7 +14,7 @@ export const loadTickets = createAsyncThunk('aviasales/loadTickets', async () =>
 
   const answerTickets = await client.get(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`);
 
-  return answerTickets.data.tickets;
+  return transformTicket(answerTickets.data.tickets);
 });
 
 const aviasalesSlice = createSlice({

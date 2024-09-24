@@ -19,13 +19,40 @@
   text-transform: uppercase;
 }
 .ticketItems {
-  display: grid;
-  grid-template: repeat(2, auto) / repeat(3, 1fr);
-  gap: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 @media (max-width: 400px) {
   .ticket {
     padding: 10px;
   }
+}
+.flightInfo {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #a0b0b9;
+}
+
+.value {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  color: #4a4a4a;
+}
+
+.segment {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
