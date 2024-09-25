@@ -27,3 +27,12 @@ export function transformTicket(list) {
     };
   });
 }
+
+export function getTimeByMinutes(minutesCount) {
+  const hours = Math.floor(minutesCount / 60);
+  const minutes = minutesCount - hours * 60;
+  const hoursStr = String(hours).padStart(2, '0');
+  const minutesStr = String(minutes).padStart(2, '0');
+
+  return `${hoursStr}ч ${minutesStr}м`;
+}

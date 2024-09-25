@@ -1,4 +1,4 @@
-import { transformDuration } from '../../utils/aviasales-utils';
+import { getTimeByMinutes, transformDuration } from '../../utils/aviasales-utils';
 import styles from './Ticket.module.scss';
 
 function FlightInfo({ title, value }) {
@@ -10,12 +10,28 @@ function FlightInfo({ title, value }) {
   );
 }
 
-function Segment({ date, destination, origin, duration }) {
+function Segment({ date, destination, origin, duration, stops }) {
+  let per = '';
+  switch (stops.length) {
+    case 1:
+      per = '1 ПЕРЕСАДКА';
+      break;
+    case 2:
+      per = '2 ПЕРЕСАДКИ';
+      break;
+    case 3:
+      per = '3 ПЕРЕСАДКИ';
+      break;
+    default:
+      per = 'ПРЯМОЙ РЕЙС';
+      break;
+  }
+
   return (
     <div className={styles.segment}>
       <FlightInfo title={`${origin} - ${destination}`} value={transformDuration(date, duration)} />
-      <FlightInfo title="в пути" value="21ч 55м" />
-      <FlightInfo title="2 пересадки" value="fvferdvaer" />
+      <FlightInfo title="в пути" value={getTimeByMinutes(duration)} />
+      <FlightInfo title={per} value={stops.join(', ')} />
     </div>
   );
 }

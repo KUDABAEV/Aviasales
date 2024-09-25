@@ -14,6 +14,7 @@ export function ListTickets() {
     debounce(() => dispatch(loadTickets()), 1000),
     []
   );
+  console.log(tickets);
 
   useEffect(() => {
     debounceLoadTickets();
