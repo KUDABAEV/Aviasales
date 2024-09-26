@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { BTN_SHOW_MORE_COUNT } from '../constants/constants';
 import { client } from '../api/client';
 import { transformTicket } from '../utils/aviasales-utils';
@@ -65,10 +65,17 @@ const aviasalesSlice = createSlice({
   },
 
   selectors: {
-    selectTickets: (state) => state.tickets.slice(0, state.showCountTickets),
-    selectTicketsMeta: (state) => ({
-      isLoading: state.isLoading,
-    }),
+    selectTickets: createSelector(
+      [(state) => state.tickets, (state) => state.showCountTickets],
+
+      (tickets, showTickets) => tickets.slice(0, showTickets)
+    ),
+    selectTicketsMeta: createSelector(
+      (state) => state.isLoading,
+      (isLoading) => ({
+        isLoading,
+      })
+    ),
   },
 });
 
