@@ -2,43 +2,46 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { BTN_SHOW_MORE_COUNT } from '../constants/constants';
 import { client } from '../api/client';
 import { transformTicket } from '../utils/aviasales-utils';
 
 const initialState = {
   tickets: [],
+  showCountTickets: BTN_SHOW_MORE_COUNT,
   searchId: null,
-  isDone: false,
+  isLoading: true,
 };
 
 export const loadTickets = createAsyncThunk('aviasales/loadTickets', async (_, thunkAPI) => {
-  const { dispatch, getState } = thunkAPI;
+  const { getState, dispatch } = thunkAPI; //
+  const { isLoading } = getState().aviasales; ///
 
-  let { searchId } = getState().aviasales;
-  const { isDone } = getState().aviasales;
+  if (!isLoading) return;
 
-  if (isDone) {
-    return;
-  }
+  dispatch(setIsLoading(true));
 
-  if (!searchId) {
-    const answerSearchId = await client.get('https://aviasales-test-api.kata.academy/search');
-    searchId = answerSearchId.data.searchId;
-    dispatch(setSearchId(answerSearchId.data.searchId));
-  }
+  try {
+    let { searchId } = getState().aviasales;
 
-  const answerTickets = await client.get(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`);
+    if (!searchId) {
+      const answerSearchId = await client.get('https://aviasales-test-api.kata.academy/search');
+      searchId = answerSearchId.data.searchId;
+      dispatch(setSearchId(searchId));
+    }
 
-  if (!answerTickets.err) {
+    const answerTickets = await client.get(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`);
+
+    if (!answerTickets.response.ok) {
+      throw new Error('Error loadTickets');
+    }
+
     dispatch(addTickets(transformTicket(answerTickets.data.tickets)));
-  } else {
-    dispatch(loadTickets());
-    return;
-  }
 
-  if (answerTickets.data.stop) {
-    dispatch(changeIsDone(true));
-  } else {
+    if (answerTickets.data.stop) {
+      dispatch(setIsLoading(false));
+    }
+  } finally {
     dispatch(loadTickets());
   }
 });
@@ -47,24 +50,30 @@ const aviasalesSlice = createSlice({
   name: 'aviasales',
   initialState,
   reducers: {
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+    showMoreTickets: (state) => {
+      state.showCountTickets += BTN_SHOW_MORE_COUNT;
+    },
     addTickets: (state, action) => {
       state.tickets = state.tickets.concat(action.payload);
     },
     setSearchId: (state, action) => {
       state.searchId = action.payload;
     },
-    changeIsDone: (state, action) => {
-      state.isDone = action.payload;
-    },
   },
 
   selectors: {
-    selectTickets: (state) => state.tickets,
+    selectTickets: (state) => state.tickets.slice(0, state.showCountTickets),
+    selectTicketsMeta: (state) => ({
+      isLoading: state.isLoading,
+    }),
   },
 });
 
-export const { addTickets, setSearchId } = aviasalesSlice.actions;
+export const { addTickets, setSearchId, showMoreTickets, setIsLoading } = aviasalesSlice.actions;
 
-export const { selectTickets } = aviasalesSlice.selectors;
+export const { selectTickets, selectTicketsMeta } = aviasalesSlice.selectors;
 
 export const aviasalesReducer = aviasalesSlice.reducer;

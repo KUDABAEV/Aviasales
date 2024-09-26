@@ -1,16 +1,33 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { BTN_SHOW_MORE_COUNT } from '../../constants/constants';
 import { AppLayout } from '../app-layout/AppLayout';
 import { Button } from '../button/Button';
 import { ControlTransplants } from '../control-transplants/ControlTransplants';
 import { ListTickets } from '../list-tickets/ListTickets';
 import { TabsTicket } from '../tabs-ticket/TabsTicket';
+import { selectTicketsMeta, showMoreTickets } from '../../store/aviasales-slice';
+import { Info } from '../info/Info';
 
 export function App() {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector(selectTicketsMeta);
+
+  const showMore = () => {
+    dispatch(showMoreTickets());
+  };
+
   return (
     <AppLayout
+      message={
+        <Info
+          message={isLoading ? 'Билеты загружаются' : 'Билеты загрузились'}
+          type={!isLoading ? 'success' : 'warning'}
+        />
+      }
       controlsTransplants={<ControlTransplants />}
       tabsTickets={<TabsTicket />}
       listTickets={<ListTickets />}
-      buttonMore={<Button />}
+      buttonMore={<Button text={`Показать еще ${BTN_SHOW_MORE_COUNT} билетов!`} onClick={showMore} />}
     />
   );
 }

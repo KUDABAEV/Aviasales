@@ -1,5 +1,9 @@
 import styles from './Button.module.scss';
 
-export function Button() {
-  return <button className={styles.button}>Показать еще 5 билетов!</button>;
+export function Button({ text, onClick }) {
+  return (
+    <button onClick={onClick} className={styles.button}>
+      {text}
+    </button>
+  );
 }
