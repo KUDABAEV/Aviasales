@@ -10,6 +10,7 @@ export function ListTickets() {
 
   const tickets = useSelector(selectTickets);
 
+  //  eslint-disable-next-line
   const debounceLoadTickets = useCallback(
     debounce(() => dispatch(loadTickets()), 1000),
     []
@@ -17,6 +18,7 @@ export function ListTickets() {
 
   useEffect(() => {
     debounceLoadTickets();
+    // eslint-disable-next-line
   }, []);
   return (
     <ul className={styles.listTickets}>

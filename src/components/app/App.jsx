@@ -7,6 +7,7 @@ import { ListTickets } from '../list-tickets/ListTickets';
 import { TabsTicket } from '../tabs-ticket/TabsTicket';
 import { selectTicketsMeta, showMoreTickets } from '../../store/aviasales-slice';
 import { Info } from '../info/Info';
+import { Spinner } from '../spinner/Spinner';
 
 export function App() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export function App() {
 
   return (
     <AppLayout
+      progress={isLoading ? <Spinner /> : <img src="/src/assets/Logo.svg" alt="logo" />}
       message={
         <Info
           message={isLoading ? 'Билеты загружаются' : 'Билеты загрузились'}

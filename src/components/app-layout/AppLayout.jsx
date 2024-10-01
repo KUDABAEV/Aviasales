@@ -1,10 +1,10 @@
 import styles from './AppLayout.module.scss';
 
-export function AppLayout({ controlsTransplants, tabsTickets, listTickets, buttonMore, message }) {
+export function AppLayout({ controlsTransplants, tabsTickets, listTickets, buttonMore, message, progress }) {
   return (
     <div className={styles.appLayout}>
       <div className={styles.logo}>
-        <img src="/src/assets/Logo.svg" alt="logo" />
+        {progress}
         {message}
       </div>
       <div className={styles.content}>
