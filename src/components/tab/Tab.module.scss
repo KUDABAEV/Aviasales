@@ -15,7 +15,9 @@
   width: 100%;
   transition: all 0.5s;
 }
-
+.tabActive {
+  background: rgb(145, 202, 255);
+}
 .tab:hover {
   background: #2196f3;
   color: #ffffff;

@@ -36,3 +36,11 @@ export function getTimeByMinutes(minutesCount) {
 
   return `${hoursStr}ч ${minutesStr}м`;
 }
+
+export function getFastValueTicket(ticket) {
+  return ticket.segments[0].duration + ticket.segments[1].duration;
+}
+
+export function getOptimalValueTicket(ticket) {
+  return ticket.price / ticket.segments[0].duration + ticket.segments[1].duration;
+}

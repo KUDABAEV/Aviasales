@@ -2,15 +2,16 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { BTN_SHOW_MORE_COUNT } from '../constants/constants';
+import { BTN_SHOW_MORE_COUNT, SORT_OPTIONS_OBJ } from '../constants/constants';
 import { client } from '../api/client';
-import { transformTicket } from '../utils/aviasales-utils';
+import { getFastValueTicket, getOptimalValueTicket, transformTicket } from '../utils/aviasales-utils';
 
 const initialState = {
   tickets: [],
   showCountTickets: BTN_SHOW_MORE_COUNT,
   searchId: null,
   isLoading: true,
+  sortValue: SORT_OPTIONS_OBJ.noSort.value,
 };
 
 export const loadTickets = createAsyncThunk('aviasales/loadTickets', async (_, thunkAPI) => {
@@ -62,14 +63,34 @@ const aviasalesSlice = createSlice({
     setSearchId: (state, action) => {
       state.searchId = action.payload;
     },
+    setSortValue: (state, action) => {
+      state.sortValue = action.payload;
+    },
   },
 
   selectors: {
     selectTickets: createSelector(
-      [(state) => state.tickets, (state) => state.showCountTickets],
+      [(state) => state.tickets, (state) => state.showCountTickets, (state) => state.sortValue],
 
-      (tickets, showTickets) => tickets.slice(0, showTickets)
+      (tickets, showTickets, sortValue) => {
+        let copyTickets = structuredClone(tickets);
+
+        if (sortValue === SORT_OPTIONS_OBJ.cheapest.value) {
+          copyTickets = copyTickets.sort((a, b) => a.price - b.price);
+        }
+
+        if (sortValue === SORT_OPTIONS_OBJ.fast.value) {
+          copyTickets = copyTickets.sort((a, b) => getFastValueTicket(a) - getFastValueTicket(b));
+        }
+
+        if (sortValue === SORT_OPTIONS_OBJ.optimal.value) {
+          copyTickets = copyTickets.sort((a, b) => getOptimalValueTicket(a) - getOptimalValueTicket(b));
+        }
+
+        return copyTickets.slice(0, showTickets);
+      }
     ),
+    selectSortValue: (state) => state.sortValue,
     selectTicketsMeta: createSelector(
       (state) => state.isLoading,
       (isLoading) => ({
@@ -79,8 +100,8 @@ const aviasalesSlice = createSlice({
   },
 });
 
-export const { addTickets, setSearchId, showMoreTickets, setIsLoading } = aviasalesSlice.actions;
+export const { addTickets, setSearchId, showMoreTickets, setIsLoading, setSortValue } = aviasalesSlice.actions;
 
-export const { selectTickets, selectTicketsMeta } = aviasalesSlice.selectors;
+export const { selectTickets, selectTicketsMeta, selectSortValue } = aviasalesSlice.selectors;
 
 export const aviasalesReducer = aviasalesSlice.reducer;

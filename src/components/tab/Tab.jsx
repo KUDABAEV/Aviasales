@@ -1,8 +1,9 @@
+import { clsx } from 'clsx';
 import styles from './Tab.module.scss';
 
-export function Tab({ name, onClick }) {
+export function Tab({ name, onClick, isActive = false }) {
   return (
-    <button className={styles.tab} onClick={onClick}>
+    <button className={clsx(styles.tab, isActive && styles.tabActive)} onClick={onClick}>
       {name}
     </button>
   );
