@@ -1,15 +1,17 @@
 .info {
   padding: 10px;
   border: 2px solid red;
-  border-radius: 25px;
+  border-radius: 5px;
 }
 
 .success {
-  background-color: rgba(22, 169, 210, 0.4);
-  border-color: blue;
+  background-color: #e6f4ff;
+  border-color: rgb(145, 202, 255);
+  box-shadow: 0 0 15px rgba(145, 202, 255, 0.5);
 }
 
 .warning {
-  background-color: rgba(224, 205, 30, 0.9);
-  border-color: yellows;
+  background-color: #fffbe6;
+  border-color: rgb(255, 231, 150);
+  box-shadow: 0 0 15px rgba(255, 231, 150, 0.5);
 }
