@@ -2,9 +2,9 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { BTN_SHOW_MORE_COUNT, SORT_OPTIONS_OBJ } from '../constants/constants';
+import { BTN_SHOW_MORE_COUNT, FILTER_OPTIONS_DEFAULT, SORT_OPTIONS_OBJ } from '../constants/constants';
 import { client } from '../api/client';
-import { getFastValueTicket, getOptimalValueTicket, transformTicket } from '../utils/aviasales-utils';
+import { getSelectedTickets, getUpdateFilterOptions, transformTicket } from '../utils/aviasales-utils';
 
 const initialState = {
   tickets: [],
@@ -12,11 +12,12 @@ const initialState = {
   searchId: null,
   isLoading: true,
   sortValue: SORT_OPTIONS_OBJ.noSort.value,
+  filterOptions: FILTER_OPTIONS_DEFAULT,
 };
 
 export const loadTickets = createAsyncThunk('aviasales/loadTickets', async (_, thunkAPI) => {
-  const { getState, dispatch } = thunkAPI; //
-  const { isLoading } = getState().aviasales; ///
+  const { getState, dispatch } = thunkAPI;
+  const { isLoading } = getState().aviasales;
 
   if (!isLoading) return;
 
@@ -66,29 +67,20 @@ const aviasalesSlice = createSlice({
     setSortValue: (state, action) => {
       state.sortValue = action.payload;
     },
+    updateFilter: (state, action) => {
+      state.filterOptions = getUpdateFilterOptions(state.filterOptions, action.payload);
+    },
   },
 
   selectors: {
     selectTickets: createSelector(
-      [(state) => state.tickets, (state) => state.showCountTickets, (state) => state.sortValue],
-
-      (tickets, showTickets, sortValue) => {
-        let copyTickets = structuredClone(tickets);
-
-        if (sortValue === SORT_OPTIONS_OBJ.cheapest.value) {
-          copyTickets = copyTickets.sort((a, b) => a.price - b.price);
-        }
-
-        if (sortValue === SORT_OPTIONS_OBJ.fast.value) {
-          copyTickets = copyTickets.sort((a, b) => getFastValueTicket(a) - getFastValueTicket(b));
-        }
-
-        if (sortValue === SORT_OPTIONS_OBJ.optimal.value) {
-          copyTickets = copyTickets.sort((a, b) => getOptimalValueTicket(a) - getOptimalValueTicket(b));
-        }
-
-        return copyTickets.slice(0, showTickets);
-      }
+      [
+        (state) => state.tickets,
+        (state) => state.showCountTickets,
+        (state) => state.sortValue,
+        (state) => state.filterOptions,
+      ],
+      getSelectedTickets
     ),
     selectSortValue: (state) => state.sortValue,
     selectTicketsMeta: createSelector(
@@ -97,11 +89,15 @@ const aviasalesSlice = createSlice({
         isLoading,
       })
     ),
+    selectFilterOptions: (state) => state.filterOptions,
+    selectTicketCount: (state) => state.tickets.length,
   },
 });
 
-export const { addTickets, setSearchId, showMoreTickets, setIsLoading, setSortValue } = aviasalesSlice.actions;
+export const { addTickets, setSearchId, showMoreTickets, setIsLoading, setSortValue, updateFilter } =
+  aviasalesSlice.actions;
 
-export const { selectTickets, selectTicketsMeta, selectSortValue } = aviasalesSlice.selectors;
+export const { selectTickets, selectTicketsMeta, selectSortValue, selectFilterOptions, selectTicketCount } =
+  aviasalesSlice.selectors;
 
 export const aviasalesReducer = aviasalesSlice.reducer;

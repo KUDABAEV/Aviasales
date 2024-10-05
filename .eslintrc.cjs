@@ -29,5 +29,8 @@ module.exports = {
     'import/prefer-default-export': 0,
     'react/react-in-jsx-scope': 0,
     'react/prop-types': 0,
+    'no-continue': 0,
+    'no-restricted-syntax': 0,
+    'guard-for-in':0
   },
 };

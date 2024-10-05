@@ -5,13 +5,14 @@ import { Button } from '../button/Button';
 import { ControlTransplants } from '../control-transplants/ControlTransplants';
 import { ListTickets } from '../list-tickets/ListTickets';
 import { TabsTicket } from '../tabs-ticket/TabsTicket';
-import { selectTicketsMeta, showMoreTickets } from '../../store/aviasales-slice';
+import { selectTickets, selectTicketsMeta, showMoreTickets } from '../../store/aviasales-slice';
 import { Info } from '../info/Info';
 import { Spinner } from '../spinner/Spinner';
 
 export function App() {
   const dispatch = useDispatch();
   const { isLoading } = useSelector(selectTicketsMeta);
+  const countTickets = useSelector(selectTickets).length;
 
   const showMore = () => {
     dispatch(showMoreTickets());
@@ -29,7 +30,9 @@ export function App() {
       controlsTransplants={<ControlTransplants />}
       tabsTickets={<TabsTicket />}
       listTickets={<ListTickets />}
-      buttonMore={<Button text={`Показать еще ${BTN_SHOW_MORE_COUNT} билетов!`} onClick={showMore} />}
+      buttonMore={
+        countTickets > 0 && <Button text={`Показать еще ${BTN_SHOW_MORE_COUNT} билетов!`} onClick={showMore} />
+      }
     />
   );
 }
