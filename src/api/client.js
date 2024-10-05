@@ -27,9 +27,6 @@ export async function client({ endPoint, customOptions = {}, callback }) {
   }
 
   try {
-    // await wait();
-    // await getErrorPromise(50);
-
     const response = await fetch(endPoint, options);
 
     if (!response.ok) {
