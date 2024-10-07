@@ -31,6 +31,8 @@ module.exports = {
     'react/prop-types': 0,
     'no-continue': 0,
     'no-restricted-syntax': 0,
-    'guard-for-in':0
+    'guard-for-in':0,
+    'import/no-unresolved': 0,
+    'import/no-absolute-path': 0,
   },
 };
